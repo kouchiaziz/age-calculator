@@ -1,111 +1,551 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حاسبة العمر</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>حاسبة العمر والفرق بين تاريخين — أدوات التاريخ</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    direction: rtl;
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #333;
-}
+  <!-- SEO -->
+  <meta name="description" content="حاسبة عمر دقيقة (سنوات/أشهر/أيام) + عداد مباشر بالثواني + كم باقي على عيد ميلادك + الفرق بين تاريخين. مجانية وسريعة." />
+  <meta name="keywords" content="حاسبة العمر, حساب العمر, الفرق بين تاريخين, age calculator, date difference" />
+  <meta name="author" content="Age Tools" />
+  <meta name="theme-color" content="#0f2b5b" />
+  <link rel="canonical" href="https://kouchiaziz.github.io/age-calculator/" />
 
-.card {
-    background: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    text-align: center;
-    width: 350px;
-}
+  <!-- Open Graph -->
+  <meta property="og:title" content="أدوات التاريخ — حاسبة العمر" />
+  <meta property="og:description" content="احسب عمرك بدقة + عداد مباشر + الفرق بين تاريخين." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kouchiaziz.github.io/age-calculator/" />
 
-h1 {
-    margin-bottom: 20px;
-    color: #1e3c72;
-}
+  <style>
+    :root{
+      --bgA:#0b1b3a;
+      --bgB:#0f2b5b;
+      --bgC:#1d4f91;
+      --card:#ffffff;
+      --text:#0e1a2b;
+      --muted:#5b677a;
+      --border:#e7ecf4;
+      --accent:#1a5ad7;
+      --accent2:#1146a8;
+      --shadow: 0 16px 45px rgba(0,0,0,.18);
+      --radius: 18px;
+      --max: 1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 600px at 50% 0%, #2d78d6 0%, var(--bgC) 38%, var(--bgB) 70%, var(--bgA) 100%);
+      padding:22px;
+    }
+    a{color:inherit}
+    .container{width:min(var(--max), 100%); margin:0 auto;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:14px; color:#eaf2ff;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; user-select:none;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      display:grid; place-items:center;
+      box-shadow: 0 10px 20px rgba(0,0,0,.12);
+    }
+    .brand h1{
+      margin:0;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    .brand .sub{opacity:.9; font-size:12px; margin-top:2px}
+    .nav{
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .nav a{
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:13px;
+      font-weight:700;
+      transition:.2s;
+    }
+    .nav a:hover{background:rgba(255,255,255,.16)}
+    .hero{
+      color:#eaf2ff;
+      text-align:center;
+      margin:10px 0 18px;
+    }
+    .hero h2{
+      margin:0 0 8px 0;
+      font-size: clamp(20px, 3vw, 34px);
+    }
+    .hero p{margin:0; opacity:.92; font-size:14px; line-height:1.7}
 
-input {
-    width: 90%;
-    padding: 12px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 980px){
+      .layout{grid-template-columns: 1.25fr .75fr;}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
 
-button {
-    padding: 12px 25px;
-    font-size: 16px;
-    background: #1e3c72;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    .ads{
+      border:1px dashed #cfe0ff;
+      background: #f4f8ff;
+      border-radius:16px;
+      padding:14px;
+      color:#1b3a6b;
+      font-size:13px;
+      line-height:1.7;
+    }
+    .ads b{color:#0b2a57}
 
-button:hover {
-    background: #2a5298;
-}
+    .tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+    .tab{
+      border:1px solid var(--border);
+      background:#f7f9fc;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+      user-select:none;
+      transition:.2s;
+    }
+    .tab.active{
+      background:#eaf2ff;
+      border-color:#cfe0ff;
+      color:var(--accent2);
+    }
+    .panel{display:none;}
+    .panel.active{display:block;}
 
-.result {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-</style>
+    label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px;}
+    input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      font-size:15px;
+      outline:none;
+    }
+    input:focus{border-color:#b9d2ff; box-shadow:0 0 0 4px rgba(64,132,255,.12);}
+
+    .row{display:grid; gap:12px; margin-top:10px;}
+    @media (min-width: 560px){ .row.two{grid-template-columns:1fr 1fr;} }
+
+    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    button{
+      border:0; cursor:pointer;
+      background:var(--accent);
+      color:#fff;
+      padding:12px 14px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+      transition:.2s;
+    }
+    button:hover{background:var(--accent2);}
+    button.secondary{
+      background:#eef2f8;
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+    button.secondary:hover{background:#e6ebf5;}
+
+    .result{
+      margin-top:14px;
+      padding:14px;
+      border-radius:16px;
+      background:#f7f9fc;
+      border:1px solid var(--border);
+    }
+    .result h3{margin:0 0 8px 0; color:var(--accent2); font-size:14px;}
+    .big{font-size:18px; font-weight:950; line-height:1.6;}
+    .muted{color:var(--muted); font-size:13px; line-height:1.7;}
+
+    .kpis{display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;}
+    @media (min-width: 560px){ .kpis{grid-template-columns: repeat(3, 1fr);} }
+    .kpi{background:#fff; border:1px solid var(--border); border-radius:16px; padding:12px;}
+    .kpi .t{font-size:12px; color:var(--muted); margin-bottom:4px;}
+    .kpi .v{font-size:16px; font-weight:950;}
+
+    .side h3{margin:0 0 8px 0; color:var(--accent2);}
+    .list{margin:0; padding-right:18px; color:var(--muted); font-size:13px; line-height:1.8;}
+    .pill{
+      display:inline-block; padding:8px 10px; border-radius:999px;
+      background:#f7f9fc; border:1px solid var(--border);
+      font-size:12px; font-weight:900; color:#294a7b;
+      margin-top:10px;
+    }
+
+    footer{
+      margin-top:16px;
+      text-align:center;
+      color:#eaf2ff;
+      opacity:.9;
+      font-size:12px;
+      line-height:1.8;
+    }
+    footer a{color:#eaf2ff; text-decoration:underline; text-underline-offset:2px;}
+
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+  </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"أدوات التاريخ — حاسبة العمر",
+    "url":"https://kouchiaziz.github.io/age-calculator/",
+    "description":"حاسبة عمر دقيقة + عداد مباشر + الفرق بين تاريخين."
+  }
+  </script>
+
+  <!-- (اختياري) ضع كود Google Analytics هنا لاحقًا -->
+
+  <!-- (اختياري) AdSense: ضع كود AdSense هنا بعد قبول حسابك
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
 </head>
 
 <body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">🗓️</div>
+        <div>
+          <h1>أدوات التاريخ</h1>
+          <div class="sub">حاسبة العمر — الفرق بين تاريخين</div>
+        </div>
+      </div>
 
-<div class="card">
-    <h1>حاسبة العمر</h1>
-    <input type="date" id="birthdate">
-    <br>
-    <button onclick="calculateAge()">احسب العمر</button>
-    <div class="result" id="result"></div>
-</div>
+      <nav class="nav" aria-label="التنقل">
+        <a href="index.html">الرئيسية</a>
+        <a href="about.html">من نحن</a>
+        <a href="privacy.html">الخصوصية</a>
+        <a href="contact.html">اتصل بنا</a>
+      </nav>
+    </div>
+
+    <section class="hero">
+      <h2>احسب عمرك بدقة خلال ثوانٍ</h2>
+      <p>سنوات/أشهر/أيام + عداد مباشر + كم باقي على عيد ميلادك + حساب الفرق بين تاريخين — بدون تسجيل.</p>
+    </section>
+
+    <div class="layout">
+      <main class="card" aria-label="الأداة">
+        <div class="tabs" role="tablist" aria-label="الأدوات">
+          <button class="tab active" type="button" data-tab="age" role="tab" aria-selected="true">حاسبة العمر</button>
+          <button class="tab" type="button" data-tab="diff" role="tab" aria-selected="false">الفرق بين تاريخين</button>
+        </div>
+
+        <!-- AGE -->
+        <section class="panel active" id="age" role="tabpanel">
+          <div class="row two">
+            <div>
+              <label for="birthdate">تاريخ الازدياد</label>
+              <input type="date" id="birthdate" />
+            </div>
+            <div>
+              <label for="asof">تاريخ الحساب (اختياري)</label>
+              <input type="date" id="asof" />
+              <div class="muted">اتركه فارغًا ليحسب إلى اليوم.</div>
+            </div>
+          </div>
+
+          <div class="btns">
+            <button id="calcAgeBtn" type="button">احسب العمر</button>
+            <button class="secondary" id="clearAgeBtn" type="button">مسح</button>
+          </div>
+
+          <div class="result" id="ageResult" style="display:none;">
+            <h3>النتيجة</h3>
+            <div class="big" id="ageText"></div>
+
+            <div class="kpis" id="ageKpis"></div>
+
+            <div class="result" style="margin-top:12px; background:#fff;">
+              <h3>عداد العمر المباشر</h3>
+              <div class="big" id="liveText">—</div>
+              <div class="muted">يشتغل تلقائيًا بعد الحساب.</div>
+            </div>
+
+            <div class="result" style="margin-top:12px; background:#fff;">
+              <h3>باقي على عيد ميلادك</h3>
+              <div class="big" id="bdayText">—</div>
+              <div class="muted" id="bdayDateText"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DIFF -->
+        <section class="panel" id="diff" role="tabpanel">
+          <div class="row two">
+            <div>
+              <label for="d1">التاريخ الأول</label>
+              <input type="date" id="d1" />
+            </div>
+            <div>
+              <label for="d2">التاريخ الثاني</label>
+              <input type="date" id="d2" />
+            </div>
+          </div>
+
+          <div class="btns">
+            <button id="calcDiffBtn" type="button">احسب الفرق</button>
+            <button class="secondary" id="clearDiffBtn" type="button">مسح</button>
+          </div>
+
+          <div class="result" id="diffResult" style="display:none;">
+            <h3>النتيجة</h3>
+            <div class="big" id="diffText"></div>
+            <div class="kpis" id="diffKpis"></div>
+            <div class="muted">النتيجة تعرض فرقًا تقويميًا (سنوات/أشهر/أيام) + فرقًا إجماليًا بالأيام.</div>
+          </div>
+        </section>
+
+        <!-- Ads placeholder (Ready for AdSense) -->
+        <div class="ads" style="margin-top:14px;">
+          <b>مكان إعلان (AdSense)</b><br/>
+          بعد قبول حسابك في Google AdSense، ضع كود الإعلان هنا (لا تضف إعلانات قبل القبول).
+        </div>
+      </main>
+
+      <aside class="card side" aria-label="معلومات">
+        <h3>جاهزية الربح (احترافية)</h3>
+        <ul class="list">
+          <li>صفحات أساسية: من نحن/الخصوصية/اتصل بنا ✅</li>
+          <li>SEO + canonical + structured data ✅</li>
+          <li>robots.txt + sitemap.xml ✅</li>
+          <li>مكان إعلانات جاهز ✅</li>
+          <li>المهم الآن: زوار + محتوى إضافي ✅</li>
+        </ul>
+
+        <div class="pill">نصيحة: انشر الموقع في مجموعات الطلاب بعنوان “احسب عمرك بدقة مجانًا”</div>
+
+        <div class="result" style="margin-top:12px; background:#fff;">
+          <h3>أفكار أدوات تزيد الربح</h3>
+          <div class="muted">
+            • حساب المعدل الدراسي (GPA) <br/>
+            • BMI (الطول/الوزن) <br/>
+            • تحويل الوحدات <br/>
+            • تحويل الوقت (ساعة/دقيقة/ثانية)
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      © <span id="y"></span> أدوات التاريخ — جميع الحقوق محفوظة. |
+      <a href="privacy.html">سياسة الخصوصية</a> |
+      <a href="contact.html">اتصل بنا</a>
+    </footer>
+  </div>
 
 <script>
-function calculateAge() {
-    const birthInput = document.getElementById("birthdate").value;
-    const result = document.getElementById("result");
+  // Footer year
+  document.getElementById("y").textContent = new Date().getFullYear();
 
-    if (!birthInput) {
-        result.innerHTML = "الرجاء إدخال تاريخ الازدياد";
-        return;
-    }
+  // Tabs
+  const tabs = document.querySelectorAll(".tab");
+  const panels = document.querySelectorAll(".panel");
+  tabs.forEach(t => {
+    t.addEventListener("click", () => {
+      tabs.forEach(x => { x.classList.remove("active"); x.setAttribute("aria-selected","false"); });
+      t.classList.add("active"); t.setAttribute("aria-selected","true");
+      const id = t.dataset.tab;
+      panels.forEach(p => p.classList.toggle("active", p.id === id));
+    });
+  });
 
-    const birthDate = new Date(birthInput);
-    const today = new Date();
-
-    let years = today.getFullYear() - birthDate.getFullYear();
-    let months = today.getMonth() - birthDate.getMonth();
-    let days = today.getDate() - birthDate.getDate();
-
+  // Helpers
+  const pad2 = (n) => String(n).padStart(2, "0");
+  function parseDateInput(value){
+    if(!value) return null;
+    const [y,m,d] = value.split("-").map(Number);
+    return new Date(y, m-1, d, 12, 0, 0, 0); // noon avoids DST issues
+  }
+  function diffYMD(from, to){
+    let years = to.getFullYear() - from.getFullYear();
+    let months = to.getMonth() - from.getMonth();
+    let days = to.getDate() - from.getDate();
     if (days < 0) {
-        months--;
-        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-        days += lastMonth.getDate();
+      months--;
+      const prevMonthLastDay = new Date(to.getFullYear(), to.getMonth(), 0).getDate();
+      days += prevMonthLastDay;
     }
-
     if (months < 0) {
-        years--;
-        months += 12;
+      years--;
+      months += 12;
+    }
+    return { years, months, days };
+  }
+  function daysBetween(a,b){
+    const ms = b.getTime() - a.getTime();
+    return Math.round(ms / (1000*60*60*24));
+  }
+  function formatNumber(n){
+    return new Intl.NumberFormat("ar-MA").format(n);
+  }
+
+  // Age tool
+  const birthEl = document.getElementById("birthdate");
+  const asofEl = document.getElementById("asof");
+  const ageBtn = document.getElementById("calcAgeBtn");
+  const clearAgeBtn = document.getElementById("clearAgeBtn");
+  const ageResult = document.getElementById("ageResult");
+  const ageText = document.getElementById("ageText");
+  const ageKpis = document.getElementById("ageKpis");
+  const liveText = document.getElementById("liveText");
+  const bdayText = document.getElementById("bdayText");
+  const bdayDateText = document.getElementById("bdayDateText");
+
+  let liveTimer = null;
+  let liveBirth = null;
+
+  function stopLive(){
+    if(liveTimer) clearInterval(liveTimer);
+    liveTimer = null;
+    liveBirth = null;
+  }
+
+  function renderAge(){
+    const birth = parseDateInput(birthEl.value);
+    const asof = parseDateInput(asofEl.value) || new Date();
+    if(!birth){ alert("الرجاء إدخال تاريخ الازدياد."); return; }
+
+    const asofSafe = new Date(asof.getFullYear(), asof.getMonth(), asof.getDate(), 12,0,0,0);
+    if(asofSafe.getTime() < birth.getTime()){
+      alert("تاريخ الحساب يجب أن يكون بعد تاريخ الازدياد.");
+      return;
     }
 
-    result.innerHTML =
-        `عمرك: ${years} سنة، ${months} شهر، ${days} يوم`;
-}
-</script>
+    const ymd = diffYMD(birth, asofSafe);
+    ageText.textContent = `عمرك: ${ymd.years} سنة، ${ymd.months} شهر، ${ymd.days} يوم`;
 
+    const totalDays = daysBetween(birth, asofSafe);
+    ageKpis.innerHTML = `
+      <div class="kpi"><div class="t">الأيام</div><div class="v">${formatNumber(totalDays)}</div></div>
+      <div class="kpi"><div class="t">الأسابيع (تقريب)</div><div class="v">${formatNumber(Math.floor(totalDays/7))}</div></div>
+      <div class="kpi"><div class="t">الساعات (تقريب)</div><div class="v">${formatNumber(totalDays*24)}</div></div>
+    `;
+
+    // Next birthday
+    const now = new Date();
+    const todayNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12,0,0,0);
+
+    let nextBday = new Date(todayNoon.getFullYear(), birth.getMonth(), birth.getDate(), 12,0,0,0);
+
+    // Feb 29 handling -> Feb 28 in non-leap years
+    if (birth.getMonth() === 1 && birth.getDate() === 29) {
+      const y = nextBday.getFullYear();
+      const isLeap = (y%4===0 && y%100!==0) || (y%400===0);
+      if(!isLeap) nextBday = new Date(y,1,28,12,0,0,0);
+    }
+
+    if(nextBday.getTime() < todayNoon.getTime()){
+      nextBday = new Date(todayNoon.getFullYear()+1, birth.getMonth(), birth.getDate(), 12,0,0,0);
+      if (birth.getMonth() === 1 && birth.getDate() === 29) {
+        const y = nextBday.getFullYear();
+        const isLeap = (y%4===0 && y%100!==0) || (y%400===0);
+        if(!isLeap) nextBday = new Date(y,1,28,12,0,0,0);
+      }
+    }
+
+    const remaining = daysBetween(todayNoon, nextBday);
+    bdayText.textContent = remaining === 0 ? "اليوم هو عيد ميلادك! 🎉" : `باقي: ${formatNumber(remaining)} يوم`;
+    bdayDateText.textContent = `عيد ميلادك القادم: ${pad2(nextBday.getDate())}/${pad2(nextBday.getMonth()+1)}/${nextBday.getFullYear()}`;
+
+    // Live counter
+    stopLive();
+    liveBirth = birth;
+
+    function tick(){
+      const n = new Date();
+      const seconds = Math.floor((n.getTime() - liveBirth.getTime()) / 1000);
+      if(seconds < 0){ liveText.textContent = "—"; return; }
+      const mins = Math.floor(seconds/60);
+      const hours = Math.floor(mins/60);
+      const days = Math.floor(hours/24);
+      liveText.textContent = `${formatNumber(seconds)} ثانية • ${formatNumber(mins)} دقيقة • ${formatNumber(hours)} ساعة • ${formatNumber(days)} يوم`;
+    }
+    tick();
+    liveTimer = setInterval(tick, 1000);
+
+    ageResult.style.display = "block";
+  }
+
+  ageBtn.addEventListener("click", renderAge);
+  clearAgeBtn.addEventListener("click", () => {
+    birthEl.value = "";
+    asofEl.value = "";
+    ageResult.style.display = "none";
+    ageText.textContent = "";
+    ageKpis.innerHTML = "";
+    liveText.textContent = "—";
+    bdayText.textContent = "—";
+    bdayDateText.textContent = "";
+    stopLive();
+  });
+
+  // Diff tool
+  const d1El = document.getElementById("d1");
+  const d2El = document.getElementById("d2");
+  const calcDiffBtn = document.getElementById("calcDiffBtn");
+  const clearDiffBtn = document.getElementById("clearDiffBtn");
+  const diffResult = document.getElementById("diffResult");
+  const diffText = document.getElementById("diffText");
+  const diffKpis = document.getElementById("diffKpis");
+
+  calcDiffBtn.addEventListener("click", () => {
+    const a = parseDateInput(d1El.value);
+    const b = parseDateInput(d2El.value);
+    if(!a || !b){ alert("الرجاء إدخال التاريخين."); return; }
+    const start = a.getTime() <= b.getTime() ? a : b;
+    const end   = a.getTime() <= b.getTime() ? b : a;
+
+    const ymd = diffYMD(start, end);
+    const totalDays = Math.abs(daysBetween(start, end));
+
+    diffText.textContent = `الفرق التقويمي: ${ymd.years} سنة، ${ymd.months} شهر، ${ymd.days} يوم`;
+    diffKpis.innerHTML = `
+      <div class="kpi"><div class="t">إجمالي الأيام</div><div class="v">${formatNumber(totalDays)}</div></div>
+      <div class="kpi"><div class="t">إجمالي الأسابيع</div><div class="v">${formatNumber(Math.floor(totalDays/7))}</div></div>
+      <div class="kpi"><div class="t">إجمالي الساعات (تقريب)</div><div class="v">${formatNumber(totalDays*24)}</div></div>
+    `;
+    diffResult.style.display = "block";
+  });
+
+  clearDiffBtn.addEventListener("click", () => {
+    d1El.value = "";
+    d2El.value = "";
+    diffResult.style.display = "none";
+    diffText.textContent = "";
+    diffKpis.innerHTML = "";
+  });
+</script>
 </body>
 </html>
