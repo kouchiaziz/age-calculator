@@ -35,6 +35,14 @@ def get_posts():
 def add_post():
     data = request.json
     content = data.get("content")
+user = data.get("user", "طالب")
+
+posts.append({
+    "id": len(posts) + 1,
+    "content": content,
+    "user": user
+})
+
 
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
