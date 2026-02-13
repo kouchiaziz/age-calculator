@@ -3,543 +3,93 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>حاسبة العمر والفرق بين تاريخين — أدوات التاريخ</title>
-
-  <!-- SEO -->
-  <meta name="description" content="حاسبة عمر دقيقة (سنوات/أشهر/أيام) + عداد مباشر بالثواني + كم باقي على عيد ميلادك + الفرق بين تاريخين. مجانية وسريعة." />
-  <meta name="keywords" content="حاسبة العمر, حساب العمر, الفرق بين تاريخين, age calculator, date difference" />
-  <meta name="author" content="Age Tools" />
-  <meta name="theme-color" content="#0f2b5b" />
-  <link rel="canonical" href="https://kouchiaziz.github.io/age-calculator/" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="أدوات التاريخ — حاسبة العمر" />
-  <meta property="og:description" content="احسب عمرك بدقة + عداد مباشر + الفرق بين تاريخين." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kouchiaziz.github.io/age-calculator/" />
-
+  <title>حيّنا الجامعي | منصة تواصل طلابية مجانية</title>
+  <meta name="description" content="منصة تواصل لطلاب الحي الجامعي: منشورات، مجموعات، رسائل فورية، وإعلانات داخلية باستخدام حساب الجامعة مجانًا." />
   <style>
-    :root{
-      --bgA:#0b1b3a;
-      --bgB:#0f2b5b;
-      --bgC:#1d4f91;
-      --card:#ffffff;
-      --text:#0e1a2b;
-      --muted:#5b677a;
-      --border:#e7ecf4;
-      --accent:#1a5ad7;
-      --accent2:#1146a8;
-      --shadow: 0 16px 45px rgba(0,0,0,.18);
-      --radius: 18px;
-      --max: 1100px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1000px 600px at 50% 0%, #2d78d6 0%, var(--bgC) 38%, var(--bgB) 70%, var(--bgA) 100%);
-      padding:22px;
-    }
-    a{color:inherit}
-    .container{width:min(var(--max), 100%); margin:0 auto;}
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin-bottom:14px; color:#eaf2ff;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px; user-select:none;
-    }
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.18);
-      display:grid; place-items:center;
-      box-shadow: 0 10px 20px rgba(0,0,0,.12);
-    }
-    .brand h1{
-      margin:0;
-      font-size:16px;
-      letter-spacing:.2px;
-    }
-    .brand .sub{opacity:.9; font-size:12px; margin-top:2px}
-    .nav{
-      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
-    }
-    .nav a{
-      text-decoration:none;
-      padding:10px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      font-size:13px;
-      font-weight:700;
-      transition:.2s;
-    }
-    .nav a:hover{background:rgba(255,255,255,.16)}
-    .hero{
-      color:#eaf2ff;
-      text-align:center;
-      margin:10px 0 18px;
-    }
-    .hero h2{
-      margin:0 0 8px 0;
-      font-size: clamp(20px, 3vw, 34px);
-    }
-    .hero p{margin:0; opacity:.92; font-size:14px; line-height:1.7}
-
-    .layout{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
-    @media (min-width: 980px){
-      .layout{grid-template-columns: 1.25fr .75fr;}
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-
-    .ads{
-      border:1px dashed #cfe0ff;
-      background: #f4f8ff;
-      border-radius:16px;
-      padding:14px;
-      color:#1b3a6b;
-      font-size:13px;
-      line-height:1.7;
-    }
-    .ads b{color:#0b2a57}
-
-    .tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
-    .tab{
-      border:1px solid var(--border);
-      background:#f7f9fc;
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:800;
-      font-size:13px;
-      user-select:none;
-      transition:.2s;
-    }
-    .tab.active{
-      background:#eaf2ff;
-      border-color:#cfe0ff;
-      color:var(--accent2);
-    }
-    .panel{display:none;}
-    .panel.active{display:block;}
-
-    label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px;}
-    input{
-      width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      font-size:15px;
-      outline:none;
-    }
-    input:focus{border-color:#b9d2ff; box-shadow:0 0 0 4px rgba(64,132,255,.12);}
-
-    .row{display:grid; gap:12px; margin-top:10px;}
-    @media (min-width: 560px){ .row.two{grid-template-columns:1fr 1fr;} }
-
-    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
-    button{
-      border:0; cursor:pointer;
-      background:var(--accent);
-      color:#fff;
-      padding:12px 14px;
-      border-radius:12px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
-    }
-    button:hover{background:var(--accent2);}
-    button.secondary{
-      background:#eef2f8;
-      color:var(--text);
-      border:1px solid var(--border);
-    }
-    button.secondary:hover{background:#e6ebf5;}
-
-    .result{
-      margin-top:14px;
-      padding:14px;
-      border-radius:16px;
-      background:#f7f9fc;
-      border:1px solid var(--border);
-    }
-    .result h3{margin:0 0 8px 0; color:var(--accent2); font-size:14px;}
-    .big{font-size:18px; font-weight:950; line-height:1.6;}
-    .muted{color:var(--muted); font-size:13px; line-height:1.7;}
-
-    .kpis{display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;}
-    @media (min-width: 560px){ .kpis{grid-template-columns: repeat(3, 1fr);} }
-    .kpi{background:#fff; border:1px solid var(--border); border-radius:16px; padding:12px;}
-    .kpi .t{font-size:12px; color:var(--muted); margin-bottom:4px;}
-    .kpi .v{font-size:16px; font-weight:950;}
-
-    .side h3{margin:0 0 8px 0; color:var(--accent2);}
-    .list{margin:0; padding-right:18px; color:var(--muted); font-size:13px; line-height:1.8;}
-    .pill{
-      display:inline-block; padding:8px 10px; border-radius:999px;
-      background:#f7f9fc; border:1px solid var(--border);
-      font-size:12px; font-weight:900; color:#294a7b;
-      margin-top:10px;
-    }
-
-    footer{
-      margin-top:16px;
-      text-align:center;
-      color:#eaf2ff;
-      opacity:.9;
-      font-size:12px;
-      line-height:1.8;
-    }
-    footer a{color:#eaf2ff; text-decoration:underline; text-underline-offset:2px;}
-
-    .sr-only{
-      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
-      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
-    }
+    :root{--bg:#0b1f3f;--bg2:#163f75;--card:#fff;--text:#132238;--muted:#5a6472;--line:#e7ebf2;--primary:#1c63e6;--primary2:#1147a8}
+    *{box-sizing:border-box} body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(160deg,var(--bg),var(--bg2));color:var(--text)}
+    .wrap{max-width:1100px;margin:auto;padding:20px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#eef4ff;flex-wrap:wrap}
+    .brand{font-weight:700;font-size:20px}
+    .nav a{color:#eef4ff;text-decoration:none;padding:8px 12px;border:1px solid #ffffff35;border-radius:999px;font-size:14px}
+    .hero{margin:20px 0;background:#ffffff12;border:1px solid #ffffff24;border-radius:20px;padding:24px;color:#fff}
+    .hero h1{margin:0 0 10px;font-size:clamp(24px,4vw,38px)}
+    .hero p{margin:0;line-height:1.9;max-width:800px}
+    .grid{display:grid;gap:16px;grid-template-columns:1.2fr .8fr;margin-top:16px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px #0000001f}
+    h2{margin:0 0 12px;color:var(--primary2);font-size:20px}
+    .features{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:650px){.features{grid-template-columns:1fr}}
+    .feature{border:1px solid var(--line);border-radius:14px;padding:12px}
+    .feature b{display:block;margin-bottom:6px}
+    .muted{color:var(--muted);font-size:14px;line-height:1.8}
+    .sample{background:#f7f9fd;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
+    .post{padding:10px 0;border-bottom:1px dashed #dfe6f3}.post:last-child{border:0}
+    .chat{display:flex;flex-direction:column;gap:8px}
+    .bubble{max-width:90%;padding:10px 12px;border-radius:12px;font-size:14px}
+    .me{align-self:flex-start;background:#e8f0ff}.you{align-self:flex-end;background:#f1f4f9}
+    .btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;padding:12px 16px;border-radius:12px;font-weight:700;margin-top:10px}
+    .steps li{margin-bottom:8px}
+    footer{color:#e8f0ff;text-align:center;padding:16px 0;font-size:13px}
   </style>
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebSite",
-    "name":"أدوات التاريخ — حاسبة العمر",
-    "url":"https://kouchiaziz.github.io/age-calculator/",
-    "description":"حاسبة عمر دقيقة + عداد مباشر + الفرق بين تاريخين."
-  }
-  </script>
-
-  <!-- (اختياري) ضع كود Google Analytics هنا لاحقًا -->
-
-  <!-- (اختياري) AdSense: ضع كود AdSense هنا بعد قبول حسابك
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-  -->
 </head>
-
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">🗓️</div>
-        <div>
-          <h1>أدوات التاريخ</h1>
-          <div class="sub">حاسبة العمر — الفرق بين تاريخين</div>
-        </div>
-      </div>
-
-      <nav class="nav" aria-label="التنقل">
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">🏫 حيّنا الجامعي</div>
+      <nav class="nav">
         <a href="index.html">الرئيسية</a>
         <a href="about.html">من نحن</a>
-        <a href="privacy.html">الخصوصية</a>
         <a href="contact.html">اتصل بنا</a>
+        <a href="privacy.html">الخصوصية</a>
       </nav>
-    </div>
+    </header>
 
     <section class="hero">
-      <h2>احسب عمرك بدقة خلال ثوانٍ</h2>
-      <p>سنوات/أشهر/أيام + عداد مباشر + كم باقي على عيد ميلادك + حساب الفرق بين تاريخين — بدون تسجيل.</p>
+      <h1>موقع تواصل لطلاب الحي الجامعي — مثل فيسبوك + واتساب</h1>
+      <p>تواصل مع زملائك داخل الإقامة الجامعية عبر منشورات عامة، مجموعات حسب المبنى، ودردشة فورية. التسجيل يتم فقط باستخدام حساب الجامعة لضمان مجتمع آمن ومجاني 100% للطلبة.</p>
     </section>
 
-    <div class="layout">
-      <main class="card" aria-label="الأداة">
-        <div class="tabs" role="tablist" aria-label="الأدوات">
-          <button class="tab active" type="button" data-tab="age" role="tab" aria-selected="true">حاسبة العمر</button>
-          <button class="tab" type="button" data-tab="diff" role="tab" aria-selected="false">الفرق بين تاريخين</button>
+    <main class="grid">
+      <section class="card">
+        <h2>ماذا يقدم الموقع؟</h2>
+        <div class="features">
+          <div class="feature"><b>📰 منشورات الحي</b><span class="muted">شارك الأخبار، الملاحظات، والأنشطة اليومية كما في فيسبوك.</span></div>
+          <div class="feature"><b>💬 دردشة فورية</b><span class="muted">رسائل مباشرة ومجموعات غرف (مبنى A/B/C) مثل واتساب.</span></div>
+          <div class="feature"><b>📅 فعاليات ومواعيد</b><span class="muted">تنبيهات المحاضرات، المسابقات، وأنشطة النادي الطلابي.</span></div>
+          <div class="feature"><b>📣 سوق طلابي داخلي</b><span class="muted">إعلانات بيع الكتب، مشاركة الأدوات، وطلبات المساعدة.</span></div>
         </div>
 
-        <!-- AGE -->
-        <section class="panel active" id="age" role="tabpanel">
-          <div class="row two">
-            <div>
-              <label for="birthdate">تاريخ الازدياد</label>
-              <input type="date" id="birthdate" />
-            </div>
-            <div>
-              <label for="asof">تاريخ الحساب (اختياري)</label>
-              <input type="date" id="asof" />
-              <div class="muted">اتركه فارغًا ليحسب إلى اليوم.</div>
-            </div>
+        <div class="sample">
+          <b>نموذج منشورات:</b>
+          <div class="post">🟢 "من لديه ملخص مادة الشبكات؟" — أحمد، مبنى B</div>
+          <div class="post">🎉 "بطولة كرة قدم يوم الخميس 5:00 مساء" — لجنة النشاط</div>
+          <div class="post">📚 "متوفر كتاب رياضيات 1 بسعر رمزي" — مريم، مبنى A</div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <h2>الدخول بحساب الجامعة</h2>
+        <p class="muted">مثال: <b>@univ.edu</b> فقط. أي حساب غير جامعي لا يمكنه التسجيل.</p>
+        <ol class="steps muted">
+          <li>إدخال البريد الجامعي.</li>
+          <li>استلام رمز التحقق على البريد.</li>
+          <li>إكمال الملف (الاسم، الغرفة، التخصص).</li>
+        </ol>
+        <a class="btn" href="#">ابدأ مجانًا</a>
+
+        <div class="sample" style="margin-top:14px">
+          <b>نموذج دردشة:</b>
+          <div class="chat">
+            <div class="bubble me">السلام عليكم، من متجه للمكتبة الآن؟</div>
+            <div class="bubble you">أنا بعد 10 دقائق 👍</div>
           </div>
+        </div>
+      </aside>
+    </main>
 
-          <div class="btns">
-            <button id="calcAgeBtn" type="button">احسب العمر</button>
-            <button class="secondary" id="clearAgeBtn" type="button">مسح</button>
-          </div>
-
-          <div class="result" id="ageResult" style="display:none;">
-            <h3>النتيجة</h3>
-            <div class="big" id="ageText"></div>
-
-            <div class="kpis" id="ageKpis"></div>
-
-            <div class="result" style="margin-top:12px; background:#fff;">
-              <h3>عداد العمر المباشر</h3>
-              <div class="big" id="liveText">—</div>
-              <div class="muted">يشتغل تلقائيًا بعد الحساب.</div>
-            </div>
-
-            <div class="result" style="margin-top:12px; background:#fff;">
-              <h3>باقي على عيد ميلادك</h3>
-              <div class="big" id="bdayText">—</div>
-              <div class="muted" id="bdayDateText"></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- DIFF -->
-        <section class="panel" id="diff" role="tabpanel">
-          <div class="row two">
-            <div>
-              <label for="d1">التاريخ الأول</label>
-              <input type="date" id="d1" />
-            </div>
-            <div>
-              <label for="d2">التاريخ الثاني</label>
-              <input type="date" id="d2" />
-            </div>
-          </div>
-
-          <div class="btns">
-            <button id="calcDiffBtn" type="button">احسب الفرق</button>
-            <button class="secondary" id="clearDiffBtn" type="button">مسح</button>
-          </div>
-
-          <div class="result" id="diffResult" style="display:none;">
-            <h3>النتيجة</h3>
-            <div class="big" id="diffText"></div>
-            <div class="kpis" id="diffKpis"></div>
-            <div class="muted">النتيجة تعرض فرقًا تقويميًا (سنوات/أشهر/أيام) + فرقًا إجماليًا بالأيام.</div>
-          </div>
-        </section>
-        
-      </main>
-    </div>
-
-    <footer>
-      © <span id="y"></span> أدوات التاريخ — جميع الحقوق محفوظة. |
-      <a href="privacy.html">سياسة الخصوصية</a> |
-      <a href="contact.html">اتصل بنا</a>
-    </footer>
+    <footer>© 2026 حيّنا الجامعي — منصة تجريبية للتواصل الطلابي المجاني</footer>
   </div>
-  <aside class="card side" aria-label="معلومات">
-  <h3>لماذا تستخدم حاسبة العمر؟</h3>
-  <ul class="list">
-    <li>حساب العمر بالسنوات والأشهر والأيام بدقة</li>
-    <li>معرفة عمرك الإجمالي بالأيام والساعات</li>
-    <li>معرفة الوقت المتبقي حتى عيد ميلادك القادم</li>
-    <li>حساب الفرق بين تاريخين بسهولة</li>
-  </ul>
-
-  <div class="result" style="margin-top:12px; background:#fff;">
-    <h3>مميزات الموقع</h3>
-    <div class="muted">
-      • مجاني بالكامل<br/>
-      • لا يحتاج تسجيل<br/>
-      • سريع وسهل الاستخدام<br/>
-      • يعمل على الهاتف والكمبيوتر
-    </div>
-  </div>
-</aside>
-
-
-<script>
-  // Footer year
-  document.getElementById("y").textContent = new Date().getFullYear();
-
-  // Tabs
-  const tabs = document.querySelectorAll(".tab");
-  const panels = document.querySelectorAll(".panel");
-  tabs.forEach(t => {
-    t.addEventListener("click", () => {
-      tabs.forEach(x => { x.classList.remove("active"); x.setAttribute("aria-selected","false"); });
-      t.classList.add("active"); t.setAttribute("aria-selected","true");
-      const id = t.dataset.tab;
-      panels.forEach(p => p.classList.toggle("active", p.id === id));
-    });
-  });
-
-  // Helpers
-  const pad2 = (n) => String(n).padStart(2, "0");
-  function parseDateInput(value){
-    if(!value) return null;
-    const [y,m,d] = value.split("-").map(Number);
-    return new Date(y, m-1, d, 12, 0, 0, 0); // noon avoids DST issues
-  }
-  function diffYMD(from, to){
-    let years = to.getFullYear() - from.getFullYear();
-    let months = to.getMonth() - from.getMonth();
-    let days = to.getDate() - from.getDate();
-    if (days < 0) {
-      months--;
-      const prevMonthLastDay = new Date(to.getFullYear(), to.getMonth(), 0).getDate();
-      days += prevMonthLastDay;
-    }
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
-    return { years, months, days };
-  }
-  function daysBetween(a,b){
-    const ms = b.getTime() - a.getTime();
-    return Math.round(ms / (1000*60*60*24));
-  }
-  function formatNumber(n){
-    return new Intl.NumberFormat("ar-MA").format(n);
-  }
-
-  // Age tool
-  const birthEl = document.getElementById("birthdate");
-  const asofEl = document.getElementById("asof");
-  const ageBtn = document.getElementById("calcAgeBtn");
-  const clearAgeBtn = document.getElementById("clearAgeBtn");
-  const ageResult = document.getElementById("ageResult");
-  const ageText = document.getElementById("ageText");
-  const ageKpis = document.getElementById("ageKpis");
-  const liveText = document.getElementById("liveText");
-  const bdayText = document.getElementById("bdayText");
-  const bdayDateText = document.getElementById("bdayDateText");
-
-  let liveTimer = null;
-  let liveBirth = null;
-
-  function stopLive(){
-    if(liveTimer) clearInterval(liveTimer);
-    liveTimer = null;
-    liveBirth = null;
-  }
-
-  function renderAge(){
-    const birth = parseDateInput(birthEl.value);
-    const asof = parseDateInput(asofEl.value) || new Date();
-    if(!birth){ alert("الرجاء إدخال تاريخ الازدياد."); return; }
-
-    const asofSafe = new Date(asof.getFullYear(), asof.getMonth(), asof.getDate(), 12,0,0,0);
-    if(asofSafe.getTime() < birth.getTime()){
-      alert("تاريخ الحساب يجب أن يكون بعد تاريخ الازدياد.");
-      return;
-    }
-
-    const ymd = diffYMD(birth, asofSafe);
-    ageText.textContent = `عمرك: ${ymd.years} سنة، ${ymd.months} شهر، ${ymd.days} يوم`;
-
-    const totalDays = daysBetween(birth, asofSafe);
-    ageKpis.innerHTML = `
-      <div class="kpi"><div class="t">الأيام</div><div class="v">${formatNumber(totalDays)}</div></div>
-      <div class="kpi"><div class="t">الأسابيع (تقريب)</div><div class="v">${formatNumber(Math.floor(totalDays/7))}</div></div>
-      <div class="kpi"><div class="t">الساعات (تقريب)</div><div class="v">${formatNumber(totalDays*24)}</div></div>
-    `;
-
-    // Next birthday
-    const now = new Date();
-    const todayNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12,0,0,0);
-
-    let nextBday = new Date(todayNoon.getFullYear(), birth.getMonth(), birth.getDate(), 12,0,0,0);
-
-    // Feb 29 handling -> Feb 28 in non-leap years
-    if (birth.getMonth() === 1 && birth.getDate() === 29) {
-      const y = nextBday.getFullYear();
-      const isLeap = (y%4===0 && y%100!==0) || (y%400===0);
-      if(!isLeap) nextBday = new Date(y,1,28,12,0,0,0);
-    }
-
-    if(nextBday.getTime() < todayNoon.getTime()){
-      nextBday = new Date(todayNoon.getFullYear()+1, birth.getMonth(), birth.getDate(), 12,0,0,0);
-      if (birth.getMonth() === 1 && birth.getDate() === 29) {
-        const y = nextBday.getFullYear();
-        const isLeap = (y%4===0 && y%100!==0) || (y%400===0);
-        if(!isLeap) nextBday = new Date(y,1,28,12,0,0,0);
-      }
-    }
-
-    const remaining = daysBetween(todayNoon, nextBday);
-    bdayText.textContent = remaining === 0 ? "اليوم هو عيد ميلادك! 🎉" : `باقي: ${formatNumber(remaining)} يوم`;
-    bdayDateText.textContent = `عيد ميلادك القادم: ${pad2(nextBday.getDate())}/${pad2(nextBday.getMonth()+1)}/${nextBday.getFullYear()}`;
-
-    // Live counter
-    stopLive();
-    liveBirth = birth;
-
-    function tick(){
-      const n = new Date();
-      const seconds = Math.floor((n.getTime() - liveBirth.getTime()) / 1000);
-      if(seconds < 0){ liveText.textContent = "—"; return; }
-      const mins = Math.floor(seconds/60);
-      const hours = Math.floor(mins/60);
-      const days = Math.floor(hours/24);
-      liveText.textContent = `${formatNumber(seconds)} ثانية • ${formatNumber(mins)} دقيقة • ${formatNumber(hours)} ساعة • ${formatNumber(days)} يوم`;
-    }
-    tick();
-    liveTimer = setInterval(tick, 1000);
-
-    ageResult.style.display = "block";
-  }
-
-  ageBtn.addEventListener("click", renderAge);
-  clearAgeBtn.addEventListener("click", () => {
-    birthEl.value = "";
-    asofEl.value = "";
-    ageResult.style.display = "none";
-    ageText.textContent = "";
-    ageKpis.innerHTML = "";
-    liveText.textContent = "—";
-    bdayText.textContent = "—";
-    bdayDateText.textContent = "";
-    stopLive();
-  });
-
-  // Diff tool
-  const d1El = document.getElementById("d1");
-  const d2El = document.getElementById("d2");
-  const calcDiffBtn = document.getElementById("calcDiffBtn");
-  const clearDiffBtn = document.getElementById("clearDiffBtn");
-  const diffResult = document.getElementById("diffResult");
-  const diffText = document.getElementById("diffText");
-  const diffKpis = document.getElementById("diffKpis");
-
-  calcDiffBtn.addEventListener("click", () => {
-    const a = parseDateInput(d1El.value);
-    const b = parseDateInput(d2El.value);
-    if(!a || !b){ alert("الرجاء إدخال التاريخين."); return; }
-    const start = a.getTime() <= b.getTime() ? a : b;
-    const end   = a.getTime() <= b.getTime() ? b : a;
-
-    const ymd = diffYMD(start, end);
-    const totalDays = Math.abs(daysBetween(start, end));
-
-    diffText.textContent = `الفرق التقويمي: ${ymd.years} سنة، ${ymd.months} شهر، ${ymd.days} يوم`;
-    diffKpis.innerHTML = `
-      <div class="kpi"><div class="t">إجمالي الأيام</div><div class="v">${formatNumber(totalDays)}</div></div>
-      <div class="kpi"><div class="t">إجمالي الأسابيع</div><div class="v">${formatNumber(Math.floor(totalDays/7))}</div></div>
-      <div class="kpi"><div class="t">إجمالي الساعات (تقريب)</div><div class="v">${formatNumber(totalDays*24)}</div></div>
-    `;
-    diffResult.style.display = "block";
-  });
-
-  clearDiffBtn.addEventListener("click", () => {
-    d1El.value = "";
-    d2El.value = "";
-    diffResult.style.display = "none";
-    diffText.textContent = "";
-    diffKpis.innerHTML = "";
-  });
-</script>
 </body>
 </html>
-
-
