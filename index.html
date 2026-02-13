@@ -85,6 +85,7 @@
   <div id="posts"></div>
 </div>
 <div style="margin-top:10px;">
+  <input id="postUser" placeholder="اسمك" style="width:100%; margin-bottom:8px; padding:6px;">
   <textarea id="postContent" placeholder="اكتب منشورك هنا..."
     style="width:100%;height:80px;padding:8px;"></textarea>
 
@@ -136,11 +137,13 @@ const API_POSTS = `${API_BASE}/posts`;
       box.innerHTML = `<div class="post">لا توجد منشورات بعد.</div>`;
       return;
     }
+    posts.reverse();
+
 
     box.innerHTML = posts
   .map(p => `
     <div class="post-card">
-        <div class="post-user">👤 طالب</div>
+        <div class="post-user">👤 ${p.user || "طالب"}</div>
         <div class="post-text">${p.content}</div>
     </div>
   `)
@@ -149,23 +152,29 @@ const API_POSTS = `${API_BASE}/posts`;
   }
 
   async function addPost() {
-    const input = document.getElementById("postContent");
-    if (!input) return;
+    const contentInput = document.getElementById("postContent");
+    const userInput = document.getElementById("postUser");
 
-    const content = input.value.trim();
+    const content = contentInput.value.trim();
+    const user = userInput.value.trim() || "طالب";
+
     if (!content) return;
 
-    const res = await fetch(API_POSTS, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content })
+    await fetch(API_POSTS, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            content: content,
+            user: user
+        })
     });
 
-    if (!res.ok) throw new Error("Failed to add post");
+    contentInput.value = "";
+    loadPosts();
+}
 
-    input.value = "";
-    await loadPosts();
-  }
 
   // حماية بسيطة ضد إدخال HTML
   function escapeHtml(str) {
