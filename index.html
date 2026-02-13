@@ -93,3 +93,61 @@
   </div>
 </body>
 </html>
+<script>
+  const API_BASE = "https://age-calculator-production-b55c.up.railway.app";
+  const API_POSTS = `${API_BASE}/posts`;
+
+  async function loadPosts() {
+    const res = await fetch(API_POSTS, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load posts");
+    const posts = await res.json();
+
+    const box = document.getElementById("posts");
+    if (!box) return;
+
+    if (!posts.length) {
+      box.innerHTML = `<div class="post">لا توجد منشورات بعد.</div>`;
+      return;
+    }
+
+    box.innerHTML = posts
+      .map(p => `<div class="post">📝 ${escapeHtml(p.content)}</div>`)
+      .join("");
+  }
+
+  async function addPost() {
+    const input = document.getElementById("postContent");
+    if (!input) return;
+
+    const content = input.value.trim();
+    if (!content) return;
+
+    const res = await fetch(API_POSTS, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content })
+    });
+
+    if (!res.ok) throw new Error("Failed to add post");
+
+    input.value = "";
+    await loadPosts();
+  }
+
+  // حماية بسيطة ضد إدخال HTML
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    }[m]));
+  }
+
+  // تشغيل عند فتح الصفحة
+  window.addEventListener("DOMContentLoaded", () => {
+    loadPosts().catch(err => {
+      const box = document.getElementById("posts");
+      if (box) box.innerHTML = `<div class="post">⚠️ تعذر تحميل المنشورات.</div>`;
+      console.error(err);
+    });
+  });
+</script>
+
