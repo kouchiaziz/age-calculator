@@ -62,11 +62,18 @@
         </div>
 
         <div class="sample">
-          <b>نموذج منشورات:</b>
-          <div class="post">🟢 "من لديه ملخص مادة الشبكات؟" — أحمد، مبنى B</div>
-          <div class="post">🎉 "بطولة كرة قدم يوم الخميس 5:00 مساء" — لجنة النشاط</div>
-          <div class="post">📚 "متوفر كتاب رياضيات 1 بسعر رمزي" — مريم، مبنى A</div>
-        </div>
+  <b>المنشورات:</b>
+  <div id="posts"></div>
+</div>
+<div style="margin-top:10px;">
+  <textarea id="postContent" placeholder="اكتب منشورك هنا..."
+    style="width:100%;height:80px;padding:8px;"></textarea>
+
+  <button onclick="addPost()" style="margin-top:5px;padding:8px 14px;">
+    نشر
+  </button>
+</div>
+
       </section>
 
       <aside class="card">
