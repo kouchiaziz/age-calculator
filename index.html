@@ -102,7 +102,8 @@
 </html>
 <script>
   const API_BASE = "https://age-calculator-production-b55c.up.railway.app";
-  const API_POSTS = `${API_BASE}/posts`;
+const API_POSTS = `${API_BASE}/posts`;
+
 
   async function loadPosts() {
     const res = await fetch(API_POSTS, { cache: "no-store" });
