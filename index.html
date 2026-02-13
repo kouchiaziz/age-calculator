@@ -32,6 +32,25 @@
     .btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;padding:12px 16px;border-radius:12px;font-weight:700;margin-top:10px}
     .steps li{margin-bottom:8px}
     footer{color:#e8f0ff;text-align:center;padding:16px 0;font-size:13px}
+    .post-card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: right;
+}
+
+.post-user {
+    font-weight: bold;
+    color: #2b4a8a;
+    margin-bottom: 5px;
+}
+
+.post-text {
+    font-size: 15px;
+}
+
   </style>
 </head>
 <body>
@@ -119,8 +138,14 @@ const API_POSTS = `${API_BASE}/posts`;
     }
 
     box.innerHTML = posts
-      .map(p => `<div class="post">📝 ${escapeHtml(p.content)}</div>`)
-      .join("");
+  .map(p => `
+    <div class="post-card">
+        <div class="post-user">👤 طالب</div>
+        <div class="post-text">${p.content}</div>
+    </div>
+  `)
+  .join("");
+
   }
 
   async function addPost() {
